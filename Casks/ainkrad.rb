@@ -12,25 +12,38 @@ cask "ainkrad" do
 
   app "Ainkrad.app"
 
-  # Ainkrad is not notarized: notarization requires a paid Apple Developer
-  # Program membership. Without `--no-quarantine`, macOS blocks the app and the
-  # user has to allow it by hand in System Settings > Privacy & Security.
+  # Ainkrad is not notarized — notarization requires a paid Apple Developer
+  # Program membership. Without this, macOS quarantines the download and
+  # refuses to launch it until the user allows it by hand in System Settings >
+  # Privacy & Security.
   #
-  #   brew install --cask --no-quarantine ahmedmelhalaby/tap/ainkrad
-  #
-  # The README says the same thing. This is the honest trade: you are trusting
-  # this tap and this GitHub release rather than Apple's notarization service.
+  # Homebrew 6 removed the `--no-quarantine` flag, so a cask for an unsigned
+  # app has to clear the attribute itself. This is exactly the command the user
+  # would otherwise run by hand; doing it here makes the install one step
+  # instead of three. It is stated plainly in the caveats below rather than
+  # done quietly — stripping Gatekeeper's mark is a real security decision, and
+  # anyone installing this should know they are making it.
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-dr", "com.apple.quarantine", "#{appdir}/Ainkrad.app"],
+                   sudo: false
+  end
+
   caveats <<~CAVEATS
-    Ainkrad is not notarized (that needs a paid Apple Developer account).
+    Ainkrad is NOT notarized by Apple — that requires a paid Apple Developer
+    Program membership.
 
-    If you installed WITHOUT --no-quarantine and macOS blocks the app, either:
+    This cask removed the macOS quarantine flag from Ainkrad.app so it will
+    launch. That is the same thing you would do by hand:
+
       xattr -dr com.apple.quarantine "/Applications/Ainkrad.app"
-    or reinstall with:
-      brew install --cask --no-quarantine ahmedmelhalaby/tap/ainkrad
 
-    Plugin code signatures are not verified in an unsigned build — the app
-    says so in its App Store surface. Downloads are still checked against the
-    catalog's SHA-256.
+    What you are trusting: this tap and the GitHub release it points at,
+    verified by SHA-256 — not Apple's notarization service.
+
+    Plugin code signatures are also not verified in an unsigned build. The app
+    says so in its App Store surface. Plugin downloads are still checked
+    against the catalog's SHA-256, so the bytes match what was published.
   CAVEATS
 
   zap trash: [
