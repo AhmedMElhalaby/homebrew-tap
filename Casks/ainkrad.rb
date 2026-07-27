@@ -7,7 +7,7 @@ cask "ainkrad" do
   desc "Agentic OS workspace for software engineers"
   homepage "https://github.com/AhmedMElhalaby/Ainkrad"
 
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
   depends_on arch: :arm64
 
   app "Ainkrad.app"
