@@ -2,7 +2,7 @@ cask "ainkrad" do
   version "0.10.0"
   sha256 "aafed811e8702c05bba07eac406de552be5852412fda26aaaa93a035bd352134"
 
-  url "https://github.com/AhmedMElhalaby/Ainkrad/releases/download/v#{version}/Ainkrad%20#{version}%20(Apple%20Silicon).dmg"
+  url "https://github.com/AhmedMElhalaby/Ainkrad/releases/download/v#{version}/Ainkrad-#{version}.dmg"
   name "Ainkrad"
   desc "Agentic OS workspace for software engineers"
   homepage "https://github.com/AhmedMElhalaby/Ainkrad"
