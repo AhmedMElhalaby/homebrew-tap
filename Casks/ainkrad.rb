@@ -1,6 +1,6 @@
 cask "ainkrad" do
-  version "0.16.1"
-  sha256 "a107503ff228e1effe0be44bbbc1803e2fd5cfff6dea46adc8e792c285c55b77"
+  version "0.16.2"
+  sha256 "8224abf82bfbaeb3b9d7b1af2246926b0e9f7561a0c642f5f0f57d9b0b5021bb"
 
   url "https://github.com/AhmedMElhalaby/Ainkrad/releases/download/v#{version}/Ainkrad-#{version}.dmg"
   name "Ainkrad"
